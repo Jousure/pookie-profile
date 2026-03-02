@@ -1,0 +1,25 @@
+@import "tailwindcss";
+
+.pixelBtn {
+
+  @apply border-4 border-black bg-pink-200 p-2 font-semibold;
+
+}
+
+.pixelBtn:hover {
+
+  @apply bg-pink-300;
+
+}
+
+.pixelBigBtn {
+
+  @apply w-full border-4 border-black bg-pink-300 p-3 font-bold;
+
+}
+
+.pixelBigBtn:hover {
+
+  @apply bg-pink-400;
+
+}
