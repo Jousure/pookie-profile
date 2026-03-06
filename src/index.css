@@ -1,25 +1,172 @@
 @import "tailwindcss";
 
-.pixelBtn {
-
-  @apply border-4 border-black bg-pink-200 p-2 font-semibold;
-
+/* Pixelated animations */
+@keyframes bounce-slow {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-5px); }
 }
 
-.pixelBtn:hover {
-
-  @apply bg-pink-300;
-
+.animate-bounce-slow {
+  animation: bounce-slow 2s ease-in-out infinite;
 }
 
-.pixelBigBtn {
-
-  @apply w-full border-4 border-black bg-pink-300 p-3 font-bold;
-
+@keyframes pixel-bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-2px); }
 }
 
-.pixelBigBtn:hover {
+@keyframes pixel-shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-2px); }
+  75% { transform: translateX(2px); }
+}
 
-  @apply bg-pink-400;
+@keyframes spin-slow {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
 
+.pixel-bounce:hover {
+  animation: pixel-bounce 0.3s ease-in-out;
+}
+
+.pixel-shake:hover {
+  animation: pixel-shake 0.3s ease-in-out;
+}
+
+.animate-spin-slow {
+  animation: spin-slow 3s linear infinite;
+}
+
+/* Cute pixelated background pattern */
+body {
+  background-color: #fce7f3;
+  background-image: 
+    repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(255,192,203,0.1) 2px, rgba(255,192,203,0.1) 4px),
+    repeating-linear-gradient(90deg, transparent, transparent 2px, rgba(255,192,203,0.1) 2px, rgba(255,192,203,0.1) 4px);
+}
+
+/* Pixelated font rendering */
+* {
+  font-smooth: never;
+  -webkit-font-smoothing: none;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Dark mode styles */
+.dark-mode {
+  background-color: #1a1a1a;
+  color: #ffffff;
+}
+
+.dark-mode .bg-white {
+  background-color: #2d2d2d !important;
+}
+
+.dark-mode .bg-gray-50 {
+  background-color: #404040 !important;
+}
+
+.dark-mode .bg-pink-50 {
+  background-color: #2d1f2f !important;
+}
+
+.dark-mode .text-black {
+  color: #ffffff !important;
+}
+
+.dark-mode .text-gray-600 {
+  color: #cccccc !important;
+}
+
+.dark-mode .border-black {
+  border-color: #ffffff !important;
+}
+
+.dark-mode .border-b-4.border-black {
+  border-bottom-color: #ffffff !important;
+}
+
+.dark-mode .border-t-4.border-black {
+  border-top-color: #ffffff !important;
+}
+
+/* Dark mode animations */
+@keyframes darkModeFade {
+  0% { 
+    background-color: #fce7f3;
+    color: #000000;
+  }
+  50% { 
+    background-color: #7a5a5a;
+    color: #ffffff;
+  }
+  100% { 
+    background-color: #1a1a1a;
+    color: #ffffff;
+  }
+}
+
+.dark-mode-transition {
+  animation: darkModeFade 0.5s ease-in-out;
+}
+
+/* Dark mode button animation */
+@keyframes moonGlow {
+  0%, 100% { 
+    box-shadow: 0 0 5px rgba(255, 255, 255, 0.3);
+    transform: rotate(0deg);
+  }
+  50% { 
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.6);
+    transform: rotate(10deg);
+  }
+}
+
+@keyframes sunGlow {
+  0%, 100% { 
+    box-shadow: 0 0 5px rgba(255, 223, 0, 0.4);
+    transform: rotate(0deg);
+  }
+  50% { 
+    box-shadow: 0 0 20px rgba(255, 223, 0, 0.8);
+    transform: rotate(10deg);
+  }
+}
+
+.dark-mode .moon-icon {
+  animation: moonGlow 2s ease-in-out infinite;
+}
+
+.light-mode .sun-icon {
+  animation: sunGlow 2s ease-in-out infinite;
+}
+
+/* Enhanced dark mode transitions */
+.dark-mode * {
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease !important;
+}
+
+/* Dark mode shadow effects */
+.dark-mode .shadow-\[6px_6px_0px_0px_black\] {
+  box-shadow: 6px 6px 0px 0px rgba(255, 255, 255, 0.8) !important;
+}
+
+.dark-mode .shadow-\[8px_8px_0px_0px_black\] {
+  box-shadow: 8px 8px 0px 0px rgba(255, 255, 255, 0.8) !important;
+}
+
+.dark-mode .shadow-lg {
+  box-shadow: 0 10px 15px -3px rgba(255, 255, 255, 0.3) !important;
+}
+
+.dark-mode .shadow-xl {
+  box-shadow: 0 20px 25px -5px rgba(255, 255, 255, 0.4) !important;
+}
+
+/* Canvas pixelated styling */
+canvas {
+  image-rendering: pixelated;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: crisp-edges;
 }
