@@ -2,6 +2,8 @@
 
 A **cute pixel-style avatar generator** built with **React + Canvas** that lets users create customizable “pookie” profile pictures by mixing facial features, colors, and accessories.
 
+<img width="1318" height="220" alt="image" src="https://github.com/user-attachments/assets/66db2278-6897-40d1-bf42-c514269adc18" />
+
 ⚠️ **Note:** This project is currently **work in progress** and **not finished yet**. More features, assets, and improvements will be added.
 
 ---
