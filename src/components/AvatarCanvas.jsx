@@ -3,24 +3,24 @@
 /* AUTO IMPORT ASSETS */
 
 const eyes = Object.values(
-  import.meta.glob("../assets/Eyes/*.png", { eager: true, import: "default" })
-);
+  import.meta.glob("../assets/Eyes/*.png", { eager: true })
+).map((m) => m.default);
 
 const hairs = Object.values(
-  import.meta.glob("../assets/Hair/*.png", { eager: true, import: "default" })
-);
+  import.meta.glob("../assets/Hair/*.png", { eager: true })
+).map((m) => m.default);
 
 const mouths = Object.values(
-  import.meta.glob("../assets/Mouth/*.png", { eager: true, import: "default" })
-);
+  import.meta.glob("../assets/Mouth/*.png", { eager: true })
+).map((m) => m.default);
 
 const noses = Object.values(
-  import.meta.glob("../assets/Nose/*.png", { eager: true, import: "default" })
-);
+  import.meta.glob("../assets/Nose/*.png", { eager: true })
+).map((m) => m.default);
 
 const brows = Object.values(
-  import.meta.glob("../assets/Eyebrow/*.png", { eager: true, import: "default" })
-);
+  import.meta.glob("../assets/Eyebrow/*.png", { eager: true })
+).map((m) => m.default);
 
 export default function AvatarCanvas({
   eye,
