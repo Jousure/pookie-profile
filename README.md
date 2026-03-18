@@ -1,77 +1,56 @@
 # 🎨 Pookie Profile Generator
 
-A **cute pixel-style avatar generator** built with **React + Canvas** that lets users create customizable “pookie” profile pictures by mixing facial features, colors, and accessories.
+A **cute pixel-style avatar generator** built with **React + Canvas** that lets users create customizable "pookie" profile pictures by mixing facial features, colors, and styles.
 
 <img width="1318" height="220" alt="image" src="https://github.com/user-attachments/assets/66db2278-6897-40d1-bf42-c514269adc18" />
-
-⚠️ **Note:** This project is currently **work in progress** and **not finished yet**. More features, assets, and improvements will be added.
 
 ---
 
 ## ✨ Current Features
 
-- 🎭 **Avatar Generator**
-  - Random avatar generation
-  - Mix and match facial features
+### 🎭 Avatar Generator
+- Random avatar generation
+- Mix and match facial features
+- Real-time preview
 
-- 🧑‍🎨 **Customizable Parts**
-  - Hair
-  - Eyes
-  - Eyebrows
-  - Nose
-  - Mouth
+### 🧑‍🎨 Customization
+- Hair styles
+- Eyes
+- Eyebrows
+- Nose
+- Mouth
+- Skin tone selection
+- Hair color customization
+- Eye color customization
 
-- 🎨 **Skin Tone Selector**
+### 🎨 UI / UX
+- Pixel-style retro UI
+- Smooth loading animation
+- Responsive layout
+- Interactive controls
 
-- 🖼 **Pixel-Style UI**
-  - Pixelated canvas rendering
-  - Retro-inspired UI buttons
-
-- ⚡ **Fast Canvas Rendering**
-  - Built using HTML5 Canvas layering
-
----
-
-## 🚧 Planned Features
-
-The following features are **planned but not implemented yet**:
-
-- 🎨 Hair color customization
-- 👁 Eye color customization
-- 💎 Accessories (glasses, jewelry, etc.)
-- ✨ Extras (sparkles, blush, freckles)
-- 🎲 Seed-based avatar generation
-- 📥 Download avatar as PNG
-- 🧩 Drag & move accessories
-- 🎭 More avatar variations
-- 📱 Better responsive design
+### ⚡ Performance
+- Optimized canvas rendering
+- Layer-based drawing system
+- Efficient image loading Built using HTML5 Canvas layering
 
 ---
 
 ## 🧠 How It Works
 
-The avatar is rendered using **canvas layering**.
+The avatar is rendered using **HTML5 Canvas layering**.
 
-Layer order:
+### Rendering Order:
 
 ```
-Skin
-Hair
-Eyebrows
-Eyes
-Nose
-Mouth
-Accessories (future)
-Extras (future)
+Skin → Hair → Eyebrows → Eyes → Nose → Mouth
 ```
 
-Assets are automatically imported using:
-
-```javascript
-import.meta.glob("../assets/Hair/*.png", { eager: true })
-```
-
-This allows new assets to be added without changing the code.
+Each layer is:
+- Loaded dynamically
+- Drawn onto a temporary canvas
+- Color-modified using `globalCompositeOperation`
+- Merged into the final canvas
 
 ---
 
@@ -80,7 +59,7 @@ This allows new assets to be added without changing the code.
 - React
 - Vite
 - HTML5 Canvas
-- JavaScript
+- JavaScript (ES6+)
 - Tailwind CSS
 
 ---
@@ -90,7 +69,7 @@ This allows new assets to be added without changing the code.
 Clone the repository:
 
 ```bash
-git clone https://github.com/yourusername/pookie-profile.git
+git clone https://github.com/Jousure/pookie-profile.git
 ```
 
 Navigate to the project folder:
@@ -117,40 +96,48 @@ npm run dev
 
 The goal of this project is to build a **fun and customizable avatar creator** where users can:
 
-- Generate unique profile pictures
-- Customize facial features
-- Add accessories and effects
-- Export avatars for social media
+- Build a fun avatar creation tool
+- Explore Canvas rendering techniques
+- Handle real-world deployment issues
+- Create a portfolio-ready frontend project
 
 ---
 
 ## ⚠️ Project Status
 
-🚧 **This project is not complete yet.**
-
-Still missing:
-
-- More avatar assets
-- Accessories system
-- Download/export feature
-- Color customization
-- Additional UI improvements
+🚧 **Work in Progress** — The core system is complete, but enhancements and features are still being added.
 
 ---
 
 ## 🤝 Contributing
 
-Contributions, ideas, and suggestions are welcome.
+Contributions are welcome!
 
-Steps:
-
-1. Fork the repository
+1. Fork the repo
 2. Create a new branch
-3. Make your changes
-4. Submit a pull request
+
+```bash
+git checkout -b feature-name
+```
+
+3. Make changes
+4. Commit
+
+```bash
+git commit -m "feat: your feature"
+```
+
+5. Push and open a pull request
 
 ---
 
 ## 📄 License
 
 This project is mainly for **learning and experimentation**.
+
+---
+
+## ⭐ If you like this project
+
+Give it a ⭐ on GitHub!
+
