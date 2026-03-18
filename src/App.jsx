@@ -207,7 +207,7 @@ const CopyIcon = () => (
 
 const CuteIcon = () => (
   <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#FF69B4" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-    <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+    <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
     <line x1="18" y1="6" x2="18" y2="10" />
     <line x1="16" y1="8" x2="20" y2="8" />
   </svg>
@@ -248,7 +248,7 @@ function App() {
   const [skinColor, setSkinColor] = useState("#F2C6A0");
   const [hairColor, setHairColor] = useState("#3b2a1a");
   const [eyeColor, setEyeColor] = useState("#000000");
-  
+
   const [showHairPicker, setShowHairPicker] = useState(false);
   const [showEyePicker, setShowEyePicker] = useState(false);
   const [notification, setNotification] = useState({ show: false, message: '' });
@@ -268,20 +268,20 @@ function App() {
   const toggleDarkMode = () => {
     const newDarkMode = !isDarkMode;
     setIsDarkMode(newDarkMode);
-    
+
     // Save dark mode preference to localStorage
     localStorage.setItem('pookie-dark-mode', newDarkMode.toString());
-    
+
     // Add transition class for smooth animation
     document.body.classList.add('dark-mode-transition');
-    
+
     setTimeout(() => {
       if (newDarkMode) {
         document.body.classList.add('dark-mode');
       } else {
         document.body.classList.remove('dark-mode');
       }
-      
+
       // Remove transition class after animation
       setTimeout(() => {
         document.body.classList.remove('dark-mode-transition');
@@ -343,55 +343,17 @@ function App() {
   ];
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      setLoadingDots(prev => {
-        if (prev.length >= 3) return '.';
-        return prev + '.';
-      });
-    }, 500);
-    
-    return () => clearInterval(interval);
-  }, []);
+    setIsLoading(true);
 
-  useEffect(() => {
     const canvas = canvasRef.current;
     const ctx = canvas.getContext("2d");
 
-    // Draw static "online . . ." animation
-    ctx.clearRect(0, 0, 512, 512);
-    ctx.fillStyle = '#000';
-    ctx.font = '16px Press Start 2P, cursive';
-    ctx.fillText('online . . .', 512 / 2 - 60, 512 / 2);
-
-    // Show loading animation only when explicitly loading
-    if (isLoading) {
-      ctx.clearRect(0, 0, 512, 512);
-      ctx.fillStyle = '#000';
-      
-      // Draw loading dots
-      const dotSize = 8;
-      const spacing = 20;
-      const startX = (512 - (3 * dotSize + 2 * spacing)) / 2;
-      const y = 512 / 2;
-      
-      for (let i = 0; i < 3; i++) {
-        const x = startX + i * (dotSize + spacing);
-        ctx.fillRect(x, y - dotSize/2, dotSize, dotSize);
-      }
-      
-      // Draw "Loading..." text
-      ctx.fillStyle = '#fff';
-      ctx.font = '16px Press Start 2P, cursive';
-      ctx.fillText('Loading...', 512 / 2 - 40, y + 30);
-      return;
-    }
-
     const images = [
-      hairs[hair],
-      brows[brow],
-      eyes[eye],
-      noses[nose],
-      mouths[mouth],
+      hairs[hair % hairs.length],
+      brows[brow % brows.length],
+      eyes[eye % eyes.length],
+      noses[nose % noses.length],
+      mouths[mouth % mouths.length],
     ];
 
     let loaded = 0;
@@ -406,7 +368,6 @@ function App() {
         loaded++;
 
         if (loaded === images.length) {
-          setIsLoading(false); // Stop loading animation
           ctx.clearRect(0, 0, 512, 512);
 
           /* SKIN BASE */
@@ -438,17 +399,24 @@ function App() {
 
             ctx.drawImage(tempCanvas, 0, 0);
           });
+
+          setIsLoading(false);
         }
       };
+
+      img.onerror = () => {
+        console.error("Failed to load:", src);
+      };
     });
-  }, [eye, hair, mouth, nose, brow, skinColor, hairColor, eyeColor, isLoading]);
+
+  }, [eye, hair, mouth, nose, brow, skinColor, hairColor, eyeColor]);
 
   /* ---------------- DOWNLOAD ---------------- */
 
   const downloadAvatar = (size = 512, format = 'png') => {
     const canvas = canvasRef.current;
     const link = document.createElement("a");
-    
+
     if (format === 'svg') {
       // Convert canvas to SVG (simplified version)
       const svgString = canvasToSVG(canvas);
@@ -465,13 +433,13 @@ function App() {
       const tempCtx = tempCanvas.getContext("2d");
       tempCanvas.width = size;
       tempCanvas.height = size;
-      
+
       // Scale the original canvas to the new size
       tempCtx.drawImage(canvas, 0, 0, size, size);
-      
+
       let mimeType = 'image/png';
       let extension = 'png';
-      
+
       switch (format) {
         case 'jpeg':
         case 'jpg':
@@ -494,15 +462,15 @@ function App() {
           mimeType = 'image/png';
           extension = 'png';
       }
-      
+
       link.download = `pookie-avatar-${size}x${size}.${extension}`;
       link.href = tempCanvas.toDataURL(mimeType, 0.95);
       link.click();
-      
+
       showNotification(`Downloaded ${size}x${size} ${extension.toUpperCase()} avatar!`);
     }
   };
-  
+
   const canvasToSVG = (canvas) => {
     // Simplified SVG conversion - creates a basic SVG with the canvas content as image
     const dataUrl = canvas.toDataURL();
@@ -517,7 +485,7 @@ function App() {
     const dataUrl = canvas.toDataURL();
     const text = "Check out my pookie avatar! 🧸";
     const url = window.location.href;
-    
+
     window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`, '_blank');
     showNotification('Opened Twitter share!');
   };
@@ -538,7 +506,7 @@ function App() {
     const canvas = canvasRef.current;
     const description = "Check out my cute pookie avatar! 🧸";
     const url = window.location.href;
-    
+
     // Open Pinterest create page - user will need to manually upload their avatar
     window.open(`https://pinterest.com/pin/create/button/?url=${encodeURIComponent(url)}&description=${encodeURIComponent(description)}`, '_blank');
     showNotification('Opened Pinterest! Upload your avatar to create a pin!');
@@ -547,7 +515,7 @@ function App() {
   const shareToReddit = () => {
     const url = window.location.href;
     const title = "Check out my pookie avatar! 🧸";
-    
+
     window.open(`https://reddit.com/submit?url=${encodeURIComponent(url)}&title=${encodeURIComponent(title)}`, '_blank');
     showNotification('Opened Reddit share!');
   };
@@ -665,7 +633,25 @@ function App() {
           {/* CENTER CANVAS */}
 
           <div className="canvas-container border-4 border-black p-4 lg:p-6 flex flex-col items-center justify-center relative">
+
             <h3 className="mb-4">Avatar Preview</h3>
+
+            {/* ✅ CUTE LOADING ANIMATION */}
+            {isLoading && (
+              <div className="absolute inset-0 flex flex-col items-center justify-center bg-white/70 z-50">
+
+                {/* Cute bouncing dots */}
+                <div className="flex gap-2 mb-3">
+                  <div className="w-3 h-3 bg-black rounded-full animate-bounce"></div>
+                  <div className="w-3 h-3 bg-black rounded-full animate-bounce delay-100"></div>
+                  <div className="w-3 h-3 bg-black rounded-full animate-bounce delay-200"></div>
+                </div>
+
+                <p className="text-sm font-bold">Loading your pookie...</p>
+
+              </div>
+            )}
+
             <canvas
               ref={canvasRef}
               width={512}
@@ -673,14 +659,16 @@ function App() {
               className="border-4 border-black bg-white shadow-lg w-full max-w-lg h-auto"
               style={{ imageRendering: "pixelated" }}
             />
+
             <p className="text-sm mt-3 opacity-75">512 × 512 pixels</p>
-            
+
             {/* Notification */}
             {notification.show && (
               <div className="absolute top-4 left-1/2 transform -translate-x-1/2 bg-black text-white px-4 py-2 border-2 border-white rounded-lg z-50 animate-pulse">
                 {notification.message}
               </div>
             )}
+
           </div>
 
           {/* RIGHT PANEL */}
@@ -814,7 +802,7 @@ function App() {
                   )}
                 </div>
                 <div className="mt-4 text-center">
-                  <div 
+                  <div
                     className="w-12 h-12 border-2 border-black mx-auto"
                     style={{ backgroundColor: hairColor }}
                   />
@@ -855,7 +843,7 @@ function App() {
                   )}
                 </div>
                 <div className="mt-4 text-center">
-                  <div 
+                  <div
                     className="w-12 h-12 border-2 border-black mx-auto"
                     style={{ backgroundColor: eyeColor }}
                   />
@@ -874,7 +862,7 @@ function App() {
                     <div
                       key={color}
                       onClick={() => setSkinColor(color)}
-                      style={{ 
+                      style={{
                         backgroundColor: color,
                         width: '32px',
                         height: '32px',
@@ -883,9 +871,8 @@ function App() {
                         transition: 'all 0.2s ease',
                         display: 'inline-block'
                       }}
-                      className={`transition-all duration-200 hover:scale-110 hover:border-2 ${
-                        skinColor === color ? 'ring-2 ring-blue-400 border-2' : ''
-                      }`}
+                      className={`transition-all duration-200 hover:scale-110 hover:border-2 ${skinColor === color ? 'ring-2 ring-blue-400 border-2' : ''
+                        }`}
                       title={color}
                     />
                   ))}
