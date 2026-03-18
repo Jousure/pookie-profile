@@ -213,27 +213,21 @@ const CuteIcon = () => (
   </svg>
 );
 
-/* ---------------- ASSET IMPORT ---------------- */
+/* ---------------- ASSET IMPORT (PUBLIC) ---------------- */
 
-const eyes = Object.values(
-  import.meta.glob("./assets/Eyes/*.png", { eager: true, import: "default" })
-);
 
-const hairs = Object.values(
-  import.meta.glob("./assets/Hair/*.png", { eager: true, import: "default" })
-);
+const getAssets = (type, prefix, count) => {
+  return Array.from({ length: count }, (_, i) => {
+    const num = String(i + 1).padStart(2, "0");
+    return `/assets/${type}/${prefix}_${num}.png`;
+  });
+};
 
-const mouths = Object.values(
-  import.meta.glob("./assets/Mouth/*.png", { eager: true, import: "default" })
-);
-
-const noses = Object.values(
-  import.meta.glob("./assets/Nose/*.png", { eager: true, import: "default" })
-);
-
-const brows = Object.values(
-  import.meta.glob("./assets/Eyebrow/*.png", { eager: true, import: "default" })
-);
+const eyes = getAssets("Eyes", "eye", 24);
+const brows = getAssets("Eyebrow", "eyebrow", 15);
+const mouths = getAssets("Mouth", "mouth", 24);
+const noses = getAssets("Nose", "nose", 24);
+const hairs = getAssets("Hair", "hair", 15);
 
 /* ---------------- APP ---------------- */
 
